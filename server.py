@@ -10,5 +10,4 @@ def postTodoList():
 @app.route('/todo-list', methods=['GET'])
 def postTodoList():
         return jsonify(request.args)
-        
 
