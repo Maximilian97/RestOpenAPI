@@ -1,0 +1,356 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Implements an OpenApi for a To Do List",
+    "version": "1.0.0",
+    "title": "Todo List"
+  },
+  "host": "todolist.swagger.io",
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "todo-list",
+      "description": "Everything about your todo lists"
+    },
+    {
+      "name": "user",
+      "description": "Operations about user"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/todo-list": {
+      "post": {
+        "tags": [
+          "todo-list"
+        ],
+        "summary": "Add a new todo list",
+        "operationId": "AddTodoList",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/todo-list"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/todo-list"
+              }
+            }
+          },
+          "404": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/todo-list/{list_id}": {
+      "get": {
+        "tags": [
+          "todo-list"
+        ],
+        "summary": "Returns todo list by ID",
+        "operationId": "ReturnTodoList",
+        "parameters": [
+          {
+            "name": "list_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/todo-list"
+              }
+            }
+          },
+          "404": {
+            "description": "Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "todo-list"
+        ],
+        "summary": "Deletes a todo list by ID",
+        "operationId": "DeleteTodoList",
+        "parameters": [
+          {
+            "name": "list_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/todo-list/{list_id}/entry": {
+      "post": {
+        "tags": [
+          "todo-list"
+        ],
+        "summary": "Adds a new entry to the todo list",
+        "operationId": "AddEntry",
+        "parameters": [
+          {
+            "name": "list_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/entry"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/entry"
+              }
+            }
+          },
+          "404": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/todo-list/{list_id}/entry/{entry_id}": {
+      "put": {
+        "tags": [
+          "todo-list"
+        ],
+        "summary": "Updates an existing entry in the todo list",
+        "operationId": "UpdateEntry",
+        "parameters": [
+          {
+            "name": "list_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "entry_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/entry"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/entry"
+              }
+            }
+          },
+          "404": {
+            "description": "Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "todo-list"
+        ],
+        "summary": "Deletes an existing entry in the todo list",
+        "operationId": "DeleteEntry",
+        "parameters": [
+          {
+            "name": "list_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "entry_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Retruns a list of all users",
+        "operationId": "GetUsers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          },
+          "404": {
+            "description": "Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Adds a new user",
+        "operationId": "AddUser",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          },
+          "404": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/user/{user_id}": {
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Deletes user by ID",
+        "operationId": "DeleteUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "todo-list": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "required": [
+        "name",
+        "id",
+        "user",
+        "list_id"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "list_id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
