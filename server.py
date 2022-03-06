@@ -105,4 +105,8 @@ def DeleteUser(user_id):
         userList.remove(listItem)
         return '', 200
 
+if __name__ == '__main__':
+    # start Flask server
+    app.debug = True
+    app.run(host='0.0.0.0', port=5000)
 
