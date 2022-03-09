@@ -1,12 +1,16 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.1",
   "info": {
+    "title": "Todo List",
     "description": "Implements an OpenApi for a To Do List",
-    "version": "1.0.0",
-    "title": "Todo List"
+    "version": "1.0.0"
   },
-  "host": "todolist.swagger.io",
-  "basePath": "/v2",
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000/",
+      "variables": {}
+    }
+  ],
   "tags": [
     {
       "name": "todo-list",
@@ -17,9 +21,6 @@
       "description": "Operations about user"
     }
   ],
-  "schemes": [
-    "http"
-  ],
   "paths": {
     "/todo-list": {
       "post": {
@@ -28,29 +29,36 @@
         ],
         "summary": "Add a new todo list",
         "operationId": "AddTodoList",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/todo-list"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/todo-list"
+              }
             }
-          }
-        ],
+          },
+          "required": false
+        },
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/todo-list"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/todo-list"
+                  }
+                }
               }
             }
           },
           "404": {
-            "description": "Error"
+            "description": "Error",
+            "content": {}
           }
-        }
+        },
+        "x-codegen-request-body-name": "body"
       }
     },
     "/todo-list/{list_id}": {
@@ -65,21 +73,28 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/todo-list"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/todo-list"
+                  }
+                }
               }
             }
           },
           "404": {
-            "description": "Error"
+            "description": "Error",
+            "content": {}
           }
         }
       },
@@ -94,15 +109,19 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {}
           },
           "404": {
-            "description": "Error"
+            "description": "Error",
+            "content": {}
           }
         }
       }
@@ -119,30 +138,41 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "body",
-            "in": "body",
             "schema": {
-              "$ref": "#/definitions/entry"
+              "type": "integer"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/entry"
+              }
+            }
+          },
+          "required": false
+        },
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/entry"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/entry"
+                  }
+                }
               }
             }
           },
           "404": {
-            "description": "Error"
+            "description": "Error",
+            "content": {}
           }
-        }
+        },
+        "x-codegen-request-body-name": "body"
       }
     },
     "/todo-list/{list_id}/entry/{entry_id}": {
@@ -157,37 +187,49 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "entry_id",
             "in": "path",
             "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
             "schema": {
-              "$ref": "#/definitions/entry"
+              "type": "integer"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/entry"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/entry"
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/entry"
+                  }
+                }
               }
             }
           },
           "404": {
-            "description": "Error"
+            "description": "Error",
+            "content": {}
           }
-        }
+        },
+        "x-codegen-request-body-name": "body"
       },
       "delete": {
         "tags": [
@@ -200,21 +242,27 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "entry_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {}
           },
           "404": {
-            "description": "Error"
+            "description": "Error",
+            "content": {}
           }
         }
       }
@@ -229,15 +277,20 @@
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/user"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
               }
             }
           },
           "404": {
-            "description": "Error"
+            "description": "Error",
+            "content": {}
           }
         }
       },
@@ -247,30 +300,36 @@
         ],
         "summary": "Adds a new user",
         "operationId": "AddUser",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/user"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/user"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
               }
             }
           },
           "404": {
-            "description": "Error"
+            "description": "Error",
+            "content": {}
           }
-        }
+        },
+        "x-codegen-request-body-name": "body"
       }
     },
     "/user/{user_id}": {
@@ -285,70 +344,64 @@
             "name": "user_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {}
           },
           "404": {
-            "description": "Error"
+            "description": "Error",
+            "content": {}
           }
         }
       }
     }
   },
-  "definitions": {
-    "todo-list": {
-      "type": "object",
-      "required": [
-        "id",
-        "name"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
+  "components": {
+    "schemas": {
+      "todo-list": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
         }
-      }
-    },
-    "entry": {
-      "type": "object",
-      "required": [
-        "name",
-        "id",
-        "user",
-        "list_id"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "list_id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "user": {
-          "type": "string"
+      },
+      "entry": {
+        "required": [
+          "name",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          }
         }
-      }
-    },
-    "user": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
         }
       }
     }

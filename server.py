@@ -4,18 +4,18 @@ from flask import Flask, request, jsonify, abort
 
 app = Flask(__name__)
 
-userId1 = uuid.uuid4
-userId2 = uuid.uuid4
-userId3 = uuid.uuid4
+userId1 = '1' #uuid.uuid4
+userId2 = '2' #uuid.uuid4
+userId3 = '3' #uuid.uuid4
 
-todoListId1 = '1318d3d1-d979-47e1-a225-dab1751dbe75'
-todoListId2 = '3062dc25-6b80-4315-bb1d-a7c86b014c65'
-todoListId3 = '44b02e00-03bc-451d-8d01-0c67ea866fee'
+todoListId1 = '1' #'1318d3d1-d979-47e1-a225-dab1751dbe75'
+todoListId2 = '2' #3062dc25-6b80-4315-bb1d-a7c86b014c65'
+todoListId3 = '3' #'44b02e00-03bc-451d-8d01-0c67ea866fee'
 
-todoId1 = uuid.uuid4
-todoId2 = uuid.uuid4
-todoId3 = uuid.uuid4
-todoId4 = uuid.uuid4
+todoId1 = '1' #uid.uuid4
+todoId2 = '2' #uuid.uuid4
+todoId3 = '3' #uuid.uuid4
+todoId4 = '4' #uuid.uuid4
 
 userList = [
         {'id': userId1, 'name': 'Konpachiro'},
@@ -35,6 +35,13 @@ todos = [
         {'id': todoId3, 'name': 'Laufen gehen', 'description': '', 'list': todoListId1, 'user': userId1},
         {'id': todoId4, 'name': 'Müll rausbringen', 'description': '', 'list': todoListId1, 'user': userId2}
 ]
+
+@app.after_request
+def apply_cors_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,POST,DELETE,PUT'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response
 
 @app.route('/todo-list', methods=['POST'])
 def PostTodoList():
@@ -76,7 +83,7 @@ def PostTodoListEntry(list_Id):
         newTodo['id'] = uuid.uuid4
 
 
-@app.route('/todo-list/<list_id>/entry/<entry_id>', methods=['PUT', 'DELETE'])
+#@app.route('/todo-list/<list_id>/entry/<entry_id>', methods=['PUT', 'DELETE'])
 
 @app.route('/user', methods=['GET', 'POST'])
 def HandleUser():
@@ -85,6 +92,7 @@ def HandleUser():
         match requestType:
                 case 'GET':
                         return jsonify([i for i in userList])
+                        #return "Ping"
                 case 'POST':
                         newUser = request.get_json
                         newUser[id] = uuid.uuid4
@@ -108,5 +116,5 @@ def DeleteUser(user_id):
 if __name__ == '__main__':
     # start Flask server
     app.debug = True
-    app.run(host='0.0.0.0', port=5000)
+    app.run()
 
