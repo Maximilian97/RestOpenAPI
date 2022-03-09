@@ -1,16 +1,12 @@
 {
-  "openapi": "3.0.1",
+  "swagger": "2.0",
   "info": {
-    "title": "Todo List",
     "description": "Implements an OpenApi for a To Do List",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "title": "Todo List"
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:5000/",
-      "variables": {}
-    }
-  ],
+  "host": "127.0.0.1:5000",
+  "basePath": "/",
   "tags": [
     {
       "name": "todo-list",
@@ -21,6 +17,9 @@
       "description": "Operations about user"
     }
   ],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/todo-list": {
       "post": {
@@ -29,36 +28,35 @@
         ],
         "summary": "Add a new todo list",
         "operationId": "AddTodoList",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/todo-list"
-              }
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/todo-list"
             }
-          },
-          "required": false
-        },
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/todo-list"
-                  }
-                }
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/todo-list"
               }
             }
           },
           "404": {
-            "description": "Error",
-            "content": {}
+            "description": "Error"
           }
-        },
-        "x-codegen-request-body-name": "body"
+        }
       }
     },
     "/todo-list/{list_id}": {
@@ -68,33 +66,29 @@
         ],
         "summary": "Returns todo list by ID",
         "operationId": "ReturnTodoList",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "list_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/todo-list"
-                  }
-                }
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/todo-list"
               }
             }
           },
           "404": {
-            "description": "Error",
-            "content": {}
+            "description": "Error"
           }
         }
       },
@@ -109,19 +103,15 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {}
+            "description": "Success"
           },
           "404": {
-            "description": "Error",
-            "content": {}
+            "description": "Error"
           }
         }
       }
@@ -133,46 +123,41 @@
         ],
         "summary": "Adds a new entry to the todo list",
         "operationId": "AddEntry",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "list_id",
             "in": "path",
             "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
             "schema": {
-              "type": "integer"
+              "$ref": "#/definitions/entry"
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/entry"
-              }
-            }
-          },
-          "required": false
-        },
         "responses": {
           "200": {
             "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/entry"
-                  }
-                }
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/entry"
               }
             }
           },
           "404": {
-            "description": "Error",
-            "content": {}
+            "description": "Error"
           }
-        },
-        "x-codegen-request-body-name": "body"
+        }
       }
     },
     "/todo-list/{list_id}/entry/{entry_id}": {
@@ -182,54 +167,48 @@
         ],
         "summary": "Updates an existing entry in the todo list",
         "operationId": "UpdateEntry",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "list_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "type": "integer"
           },
           {
             "name": "entry_id",
             "in": "path",
             "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
             "schema": {
-              "type": "integer"
+              "$ref": "#/definitions/entry"
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/entry"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
             "description": "Success",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/entry"
-                  }
-                }
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/entry"
               }
             }
           },
           "404": {
-            "description": "Error",
-            "content": {}
+            "description": "Error"
           }
-        },
-        "x-codegen-request-body-name": "body"
+        }
       },
       "delete": {
         "tags": [
@@ -242,27 +221,21 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "type": "integer"
           },
           {
             "name": "entry_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {}
+            "description": "Success"
           },
           "404": {
-            "description": "Error",
-            "content": {}
+            "description": "Error"
           }
         }
       }
@@ -274,23 +247,21 @@
         ],
         "summary": "Retruns a list of all users",
         "operationId": "GetUsers",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/user"
-                  }
-                }
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/user"
               }
             }
           },
           "404": {
-            "description": "Error",
-            "content": {}
+            "description": "Error"
           }
         }
       },
@@ -300,36 +271,36 @@
         ],
         "summary": "Adds a new user",
         "operationId": "AddUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/user"
-              }
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/user"
-                  }
-                }
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/user"
               }
             }
           },
           "404": {
-            "description": "Error",
-            "content": {}
+            "description": "Error"
           }
-        },
-        "x-codegen-request-body-name": "body"
+        }
       }
     },
     "/user/{user_id}": {
@@ -344,64 +315,52 @@
             "name": "user_id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {}
+            "description": "Success"
           },
           "404": {
-            "description": "Error",
-            "content": {}
+            "description": "Error"
           }
         }
       }
     }
   },
-  "components": {
-    "schemas": {
-      "todo-list": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          }
+  "definitions": {
+    "todo-list": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
         }
-      },
-      "entry": {
-        "required": [
-          "name",
-          "user"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "user": {
-            "type": "string"
-          }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "string"
         }
-      },
-      "user": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          }
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
         }
       }
     }
