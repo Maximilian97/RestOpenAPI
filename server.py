@@ -1,3 +1,4 @@
+import json
 import uuid
 
 from flask import Flask, request, jsonify, abort
@@ -87,11 +88,11 @@ def HandleTodoList(list_id):
 
 
 @app.route('/todo-list/<list_id>/entry', methods=['POST'])
-def PostTodoListEntry(list_Id):
+def PostTodoListEntry(list_id):
         newTodo = request.get_json(force=True)
         print('The todo {} will be added'.format(newTodo))
         newTodo['id'] = uuid.uuid4()
-        newTodo['list_id'] = list_Id
+        newTodo['list_id'] = list_id
         todos.append(newTodo)
         return jsonify(newTodo), 200
 
@@ -102,9 +103,10 @@ def HandleEntry(list_id, entry_id):
         todoItem = None
 
         for l in todos:
-                if l['id'] == entry_id and l['list_id'] == list_id:
+                if l['id'] == entry_id and l['list_id'] == list_id: 
                         todoItem = l
                         break
+
         if not todoItem:
                 abort(404)
 
@@ -132,10 +134,10 @@ def HandleUser():
                         print('Returning users...')
                         return jsonify(userList), 200
                 case 'POST':
-                        newUser = request.get_json
-                        newUser[id] = uuid.uuid4()
+                        newUser = request.get_json(force=True)
+                        newUser['id'] = uuid.uuid4()
                         userList.append(newUser)
-                        return '', 200
+                        return jsonify(newUser), 200
                 case _:
                         abort(404)
 

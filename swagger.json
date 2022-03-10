@@ -53,6 +53,30 @@
               }
             }
           },
+          "500": {
+            "description": "List could not be added"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "todo-list"
+        ],
+        "summary": "Returns all todo lists",
+        "operationId": "ReturnTodoLists",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/todo-list"
+              }
+            }
+          },
           "404": {
             "description": "Error"
           }
@@ -74,7 +98,7 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -103,7 +127,7 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -134,7 +158,7 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "name": "body",
@@ -154,8 +178,8 @@
               }
             }
           },
-          "404": {
-            "description": "Error"
+          "500": {
+            "description": "Entry could not be added"
           }
         }
       }
@@ -178,20 +202,20 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "name": "entry_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/entry"
+              "$ref": "#/definitions/update_entry"
             }
           }
         ],
@@ -221,13 +245,13 @@
             "name": "list_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "name": "entry_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -297,8 +321,8 @@
               }
             }
           },
-          "404": {
-            "description": "Error"
+          "500": {
+            "description": "User could not be added"
           }
         }
       }
@@ -315,7 +339,7 @@
             "name": "user_id",
             "in": "path",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -333,6 +357,10 @@
     "todo-list": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
         "name": {
           "type": "string"
         }
@@ -341,6 +369,14 @@
     "entry": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "list_id": {
+          "type": "string",
+          "format": "uuid"
+        },
         "name": {
           "type": "string"
         },
@@ -348,6 +384,18 @@
           "type": "string"
         },
         "user_id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "update_entry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
           "type": "string"
         }
       }
